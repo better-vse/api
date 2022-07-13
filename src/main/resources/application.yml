@@ -19,6 +19,15 @@ spring:
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
 
+  mail:
+    default-encoding: UTF-8
+    host: ${MAIL_HOST:smtp.mailtrap.io}
+    port: ${MAIL_PORT:2525}
+    protocol: smtp
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    test-connection: true
+
 server:
   port: ${PORT:8080}
   error:

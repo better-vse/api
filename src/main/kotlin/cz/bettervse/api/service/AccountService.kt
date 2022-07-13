@@ -15,7 +15,7 @@ class AccountService(
         val account = repository.findAccountByUsername(username).awaitSingleOrNull() ?: Account(username = username)
         val code = verificationService.generateVerificationCode()
 
-        // TODO: Request account verification
+        verificationService.sendVerificationEmail(account.email, code)
 
         return repository.save(account.copy(code = code)).awaitSingle()
     }
