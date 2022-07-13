@@ -8,6 +8,7 @@ import cz.bettervse.api.domain.errors.AccountNotFoundError
 import cz.bettervse.api.domain.errors.AccountVerificationError
 import cz.bettervse.api.domain.errors.InvalidVerificationCodeError
 import cz.bettervse.api.repository.AccountRepository
+import cz.bettervse.api.security.JwtAuthenticationService
 import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import org.springframework.stereotype.Service
@@ -15,7 +16,8 @@ import org.springframework.stereotype.Service
 @Service
 class AccountService(
     private val repository: AccountRepository,
-    private val verificationService: AccountVerificationService
+    private val verificationService: AccountVerificationService,
+    private val authenticationService: JwtAuthenticationService
 ) {
     suspend fun createAccount(username: String): Account {
         val account = repository.findAccountByUsername(username).awaitSingleOrNull() ?: Account(username = username)
@@ -34,8 +36,8 @@ class AccountService(
         }
 
         val updated = repository.save(account.copy(code = null)).awaitSingle()
-        val token = verificationService.createJwtToken(updated)
+        val token = authenticationService.createJwtToken(updated)
 
-        return token.valid()
+        return token.credentials.valid()
     }
 }
