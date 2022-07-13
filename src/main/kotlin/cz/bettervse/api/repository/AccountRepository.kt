@@ -8,6 +8,8 @@ import reactor.core.publisher.Mono
 @Repository
 interface AccountRepository : ReactiveCrudRepository<Account, Int> {
 
+    fun findAccountByUsername(username: String): Mono<Account>
+
     fun findAccountByUsernameAndCode(username: String, code: String): Mono<Account>
 
 }
