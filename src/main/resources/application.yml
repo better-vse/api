@@ -11,3 +11,13 @@ spring:
   r2dbc:
     username: ${spring.datasource.username}
     password: ${spring.datasource.password}
+
+  liquibase:
+    enabled: true
+    change-log: classpath:/changelog.sql
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+
+server:
+  port: ${PORT:8080}
