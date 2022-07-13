@@ -38,3 +38,8 @@ server:
 jwt:
   secret: ${JWT_SECRET}
   issuer: bettervse.cz
+
+springdoc:
+  swagger-ui:
+    path: /swagger
+    show-extensions: true
