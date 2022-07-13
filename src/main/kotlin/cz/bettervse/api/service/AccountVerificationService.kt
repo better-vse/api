@@ -1,5 +1,6 @@
 package cz.bettervse.api.service
 
+import cz.bettervse.api.domain.Account
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.stereotype.Service
 import org.thymeleaf.context.Context
@@ -52,6 +53,10 @@ class AccountVerificationService(
         }
 
         mailer.send(message)
+    }
+
+    fun createJwtToken(account: Account): String {
+        return "this.will.be.a.valid.jwt"
     }
 
 }

@@ -33,4 +33,4 @@ server:
   error:
     include-exception: false
     include-stacktrace: never
-    include-message: never
+    include-message: always
