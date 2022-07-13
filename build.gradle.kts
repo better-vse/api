@@ -37,6 +37,7 @@ dependencies {
     implementation("org.liquibase:liquibase-core")
     implementation("org.springframework:spring-jdbc")
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity5")
+    implementation("io.arrow-kt:arrow-core:1.1.2")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
     runtimeOnly("org.postgresql:postgresql")
