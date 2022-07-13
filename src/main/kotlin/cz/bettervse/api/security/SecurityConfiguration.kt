@@ -28,7 +28,8 @@ class SecurityConfiguration {
 
         return http {
             authorizeExchange {
-                authorize("/api/v1/account/*", permitAll)
+                authorize("/api/v1/account/create", permitAll)
+                authorize("/api/v1/account/verify", permitAll)
                 authorize("/api/v1/**", hasRole("USER"))
                 authorize(anyExchange, permitAll)
             }

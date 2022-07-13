@@ -1,5 +1,7 @@
 package cz.bettervse.api.controller
 
+import cz.bettervse.api.domain.Account
+import cz.bettervse.api.request.AccountInformationResponse
 import cz.bettervse.api.request.CreateAccountRequest
 import cz.bettervse.api.request.VerifyAccountRequest
 import cz.bettervse.api.response.CreateAccountResponse
@@ -7,6 +9,7 @@ import cz.bettervse.api.response.VerifyAccountResponse
 import cz.bettervse.api.service.AccountService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -36,4 +39,13 @@ class AccountController(private val service: AccountService) {
             )
     }
 
+    @PostMapping("/info")
+    suspend fun accountInformation(@AuthenticationPrincipal account: Account): ResponseEntity<AccountInformationResponse> {
+        return ResponseEntity.ok(
+            AccountInformationResponse(
+                account.id,
+                account.username
+            )
+        )
+    }
 }
