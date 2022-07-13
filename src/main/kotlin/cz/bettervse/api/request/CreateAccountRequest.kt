@@ -5,6 +5,6 @@ import javax.validation.constraints.Size
 
 data class CreateAccountRequest(
     @field:Size(min = 6, max = 6)
-    @field:Pattern(regexp = "^[\\da-z]+$")
+    @field:Pattern(regexp = "^[a-z]+\\d+$")
     val username: String
 )
