@@ -1,5 +1,8 @@
 package cz.bettervse.api.service
 
+import com.auth0.jwt.JWT
+import com.auth0.jwt.algorithms.Algorithm
+import cz.bettervse.api.configuration.JwtConfiguration
 import cz.bettervse.api.domain.Account
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.stereotype.Service
@@ -7,6 +10,8 @@ import org.thymeleaf.context.Context
 import org.thymeleaf.spring5.SpringTemplateEngine
 import java.nio.ByteBuffer
 import java.security.SecureRandom
+import java.time.Duration
+import java.time.Instant
 import javax.mail.Message
 import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeBodyPart
@@ -16,7 +21,8 @@ import kotlin.random.Random
 @Service
 class AccountVerificationService(
     private val mailer: JavaMailSender,
-    private val templates: SpringTemplateEngine
+    private val templates: SpringTemplateEngine,
+    private val configuration: JwtConfiguration
 ) {
 
     fun generateVerificationCode(): String {
@@ -56,7 +62,12 @@ class AccountVerificationService(
     }
 
     fun createJwtToken(account: Account): String {
-        return "this.will.be.a.valid.jwt"
-    }
+        val expiration = Instant.now() + Duration.ofDays(365 * 2)
 
+        return JWT.create()
+            .withIssuer(configuration.issuer)
+            .withSubject(account.username)
+            .withExpiresAt(expiration)
+            .sign(Algorithm.HMAC512(configuration.secret))
+    }
 }

@@ -38,6 +38,7 @@ dependencies {
     implementation("org.springframework:spring-jdbc")
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity5")
     implementation("io.arrow-kt:arrow-core:1.1.2")
+    implementation("com.auth0:java-jwt:4.0.0")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
     runtimeOnly("org.postgresql:postgresql")

@@ -34,3 +34,7 @@ server:
     include-exception: false
     include-stacktrace: never
     include-message: always
+
+jwt:
+  secret: ${JWT_SECRET}
+  issuer: bettervse.cz
