@@ -12,6 +12,6 @@ data class Account(
     @Column("username")
     val username: String,
 
-    @Column("verifiation_code")
+    @Column("verification_code")
     val code: String? = null
 )
