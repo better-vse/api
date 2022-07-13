@@ -1,7 +1,6 @@
 package cz.bettervse.api.service
 
 import cz.bettervse.api.configuration.JwtConfiguration
-import cz.bettervse.api.domain.Account
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.stereotype.Service
 import org.thymeleaf.context.Context

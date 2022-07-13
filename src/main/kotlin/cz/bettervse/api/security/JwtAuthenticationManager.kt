@@ -4,7 +4,6 @@ import cz.bettervse.api.exceptions.InvalidJwtTokenException
 import cz.bettervse.api.repository.AccountRepository
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import kotlinx.coroutines.reactor.mono
-import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.ReactiveAuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
