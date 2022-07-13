@@ -1,0 +1,13 @@
+spring:
+  main:
+    web-application-type: reactive
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/bettervse}
+    username: ${DATABASE_USERNAME:bettervse}
+    password: ${DATABASE_PASSWORD:bettervse}
+
+  r2dbc:
+    username: ${spring.datasource.username}
+    password: ${spring.datasource.password}
