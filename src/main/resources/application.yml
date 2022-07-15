@@ -37,7 +37,7 @@ server:
 
 jwt:
   secret: ${JWT_SECRET}
-  issuer: bettervse.cz
+  issuer: https://better-vse.vrba.dev
 
 springdoc:
   swagger-ui:

@@ -12,20 +12,33 @@ import cz.bettervse.api.security.JwtAuthenticationService
 import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import org.springframework.stereotype.Service
+import java.nio.ByteBuffer
+import java.security.SecureRandom
+import kotlin.random.Random
 
 @Service
 class AccountService(
     private val repository: AccountRepository,
-    private val verificationService: AccountVerificationService,
-    private val authenticationService: JwtAuthenticationService
+    private val emailService: EmailService,
+    private val authenticationService: JwtAuthenticationService,
 ) {
     suspend fun createAccount(username: String): Account {
         val account = repository.findAccountByUsername(username).awaitSingleOrNull() ?: Account(username = username)
-        val code = verificationService.generateVerificationCode()
+        val code = generateVerificationCode()
 
-        verificationService.sendVerificationEmail(account.email, code)
+        emailService.sendVerificationEmail(account.email, code)
 
         return repository.save(account.copy(code = code)).awaitSingle()
+    }
+
+    private fun generateVerificationCode(): String {
+        val charset = ('A'..'Z').toSet()
+
+        // Generate a cryptographically secure random seed that can be used in PRNG
+        val seed = SecureRandom.getSeed(Long.SIZE_BYTES)
+        val source = Random(ByteBuffer.wrap(seed).long)
+
+        return generateSequence { charset.random(source) }.take(8).joinToString("")
     }
 
     suspend fun verifyAccount(username: String, code: String): Validated<AccountVerificationError, String> {
