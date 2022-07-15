@@ -26,6 +26,11 @@ spring:
     username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
     test-connection: ${MAIL_TEST_CONNECTION:true}
+    properties:
+      mail:
+        smtp:
+          auth: ${MAIL_AUTH:true}
+          timeout: 5000
 
 server:
   port: ${PORT:8080}
