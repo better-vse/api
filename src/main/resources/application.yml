@@ -26,7 +26,7 @@ spring:
     protocol: smtp
     username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
-    test-connection: false
+    test-connection: ${MAIL_TEST_CONNECTION:true}
 
 server:
   port: ${PORT:8080}
