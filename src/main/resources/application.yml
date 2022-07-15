@@ -29,7 +29,7 @@ spring:
     test-connection: true
 
 server:
-  port: ${PORT:8080}
+  # port: ${PORT:8080}
   error:
     include-exception: false
     include-stacktrace: never

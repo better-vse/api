@@ -6,6 +6,7 @@ import io.r2dbc.spi.ConnectionFactory
 import io.r2dbc.spi.ConnectionFactoryOptions
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.ApplicationRunner
+import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
@@ -25,13 +26,6 @@ class BetterVseApiApplication {
             .build()
 
         return ConnectionFactories.get(options)
-    }
-
-    @Bean
-    fun applicationRunner(@Value("\${server.port}") port: String): ApplicationRunner {
-        return ApplicationRunner {
-            println("Running on port $port")
-        }
     }
 }
 
