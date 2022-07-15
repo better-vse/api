@@ -3,6 +3,7 @@ package cz.bettervse.api
 import com.ninjasquad.springmockk.MockkBean
 import cz.bettervse.api.domain.Account
 import cz.bettervse.api.repository.AccountRepository
+import cz.bettervse.api.request.AccountInformationResponse
 import cz.bettervse.api.request.CreateAccountRequest
 import cz.bettervse.api.request.VerifyAccountRequest
 import cz.bettervse.api.response.VerifyAccountResponse
@@ -17,6 +18,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
@@ -187,4 +189,37 @@ class AccountControllerTests() {
         assertEquals("vrbj04", account.captured.username)
         assertNull(account.captured.code)
     }
+
+    @Test
+    fun `test account information is not accessible without jwt token`() {
+        client.get()
+            .uri("/api/v1/account/info")
+            .accept(MediaType.APPLICATION_JSON)
+            .exchange()
+            .expectStatus()
+            .isUnauthorized
+    }
+
+    @Test
+    fun `test account information returns ok with valid jwt token`() {
+        val account = Account(id = 1, username = "vrbj04", code = null)
+        val token = "Bearer a.valid.jwt.token.dude.trust.me"
+        val slot = slot<JwtAuthenticationToken>()
+
+        every { jwtAuthenticationService.getUsernameFromToken(capture(slot)) } answers { "vrbj04" }
+        coEvery { accountRepository.findAccountByUsername("vrbj04") } coAnswers { account }
+
+        client.get()
+            .uri("/api/v1/account/info")
+            .accept(MediaType.APPLICATION_JSON)
+            .header(HttpHeaders.AUTHORIZATION, token)
+            .exchange()
+            .expectStatus()
+            .isOk
+            .expectBody<AccountInformationResponse>()
+            .isEqualTo(AccountInformationResponse(1, "vrbj04"))
+
+        assertEquals(token.removePrefix("Bearer "), slot.captured.credentials)
+    }
+
 }

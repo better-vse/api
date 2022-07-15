@@ -10,6 +10,7 @@ import cz.bettervse.api.service.AccountService
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -39,7 +40,7 @@ class AccountController(private val service: AccountService) {
             )
     }
 
-    @PostMapping("/info")
+    @GetMapping("/info", consumes = [MediaType.ALL_VALUE])
     suspend fun accountInformation(@AuthenticationPrincipal account: Account): ResponseEntity<AccountInformationResponse> {
         return ResponseEntity.ok(
             AccountInformationResponse(
