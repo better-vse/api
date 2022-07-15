@@ -1,5 +1,6 @@
 package cz.bettervse.api.service
 
+import org.slf4j.LoggerFactory
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.stereotype.Service
 import org.thymeleaf.context.Context
@@ -14,6 +15,7 @@ class EmailService(
     private val mailer: JavaMailSender,
     private val templates: SpringTemplateEngine,
 ) {
+    private val logger = LoggerFactory.getLogger(this::class.qualifiedName)
 
     @Suppress("UsePropertyAccessSyntax")
     fun sendVerificationEmail(email: String, code: String) {
@@ -37,6 +39,7 @@ class EmailService(
             setContent(body)
         }
 
+        logger.info("Sending verification code $code to $email")
         mailer.send(message)
     }
 }
