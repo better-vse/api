@@ -1,2 +1,2 @@
-web: java $JAVA_OPTS -jar -Dspring.profiles.active=production -Dserver.port=$PORT build/libs/api-*.jar
+web: java $JAVA_OPTS -jar -Dspring.profiles.active=production build/libs/api-*.jar
 
