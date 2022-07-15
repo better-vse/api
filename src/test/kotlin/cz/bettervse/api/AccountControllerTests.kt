@@ -45,6 +45,8 @@ class AccountControllerTests() {
     fun `test creating account without username returns bad request`() {
         client.post()
             .uri("/api/v1/account/create")
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON)
             .exchange()
             .expectStatus()
             .isBadRequest

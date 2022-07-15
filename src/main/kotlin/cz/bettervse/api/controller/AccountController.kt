@@ -7,6 +7,7 @@ import cz.bettervse.api.request.VerifyAccountRequest
 import cz.bettervse.api.response.CreateAccountResponse
 import cz.bettervse.api.response.VerifyAccountResponse
 import cz.bettervse.api.service.AccountService
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.PostMapping
@@ -17,7 +18,7 @@ import org.springframework.web.server.ResponseStatusException
 import javax.validation.Valid
 
 @RestController
-@RequestMapping("/api/v1/account")
+@RequestMapping("/api/v1/account", consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
 class AccountController(private val service: AccountService) {
 
     @PostMapping("/create")
