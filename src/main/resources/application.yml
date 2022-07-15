@@ -23,11 +23,9 @@ spring:
     default-encoding: UTF-8
     host: ${MAIL_HOST:smtp.mailtrap.io}
     port: ${MAIL_PORT:2525}
-    protocol: smtp
     username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
     test-connection: ${MAIL_TEST_CONNECTION:true}
-    debug: {MAIL_DEBUG:false}
 
 server:
   port: ${PORT:8080}
