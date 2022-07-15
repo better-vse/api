@@ -1,5 +1,4 @@
 package cz.bettervse.api.controller
-
 import cz.bettervse.api.domain.Account
 import cz.bettervse.api.request.AccountInformationResponse
 import cz.bettervse.api.request.CreateAccountRequest
