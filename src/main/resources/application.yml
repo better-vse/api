@@ -43,3 +43,13 @@ springdoc:
   swagger-ui:
     path: /swagger
     show-extensions: true
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  mail:
+    test-connection: false # Email client is mocked in tests

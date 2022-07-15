@@ -7,7 +7,6 @@ import cz.bettervse.api.request.VerifyAccountRequest
 import cz.bettervse.api.response.CreateAccountResponse
 import cz.bettervse.api.response.VerifyAccountResponse
 import cz.bettervse.api.service.AccountService
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.PostMapping
@@ -34,7 +33,7 @@ class AccountController(private val service: AccountService) {
         return service.verifyAccount(request.username, request.code)
             .map { token -> VerifyAccountResponse(request.username, token) }
             .fold(
-                { error -> throw ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, error.message) },
+                { error -> throw ResponseStatusException(error.status, error.message) },
                 { response -> ResponseEntity.ok(response) }
             )
     }
