@@ -1,13 +1,12 @@
 package cz.bettervse.api.repository
 
 import cz.bettervse.api.domain.Teacher
-import org.springframework.data.repository.reactive.ReactiveCrudRepository
+import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import org.springframework.stereotype.Repository
-import reactor.core.publisher.Mono
 
 @Repository
-interface TeacherRepository : ReactiveCrudRepository<Teacher, Int> {
+interface TeacherRepository : CoroutineCrudRepository<Teacher, Int> {
 
-    fun findTeacherByInsis(insis: Int): Mono<Teacher>
+    suspend fun findTeacherByInsis(insis: Int): Teacher?
 
 }

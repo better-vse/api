@@ -23,12 +23,12 @@ class AccountService(
     private val authenticationService: JwtAuthenticationService,
 ) {
     suspend fun createAccount(username: String): Account {
-        val account = repository.findAccountByUsername(username).awaitSingleOrNull() ?: Account(username = username)
+        val account = repository.findAccountByUsername(username) ?: Account(username = username)
         val code = generateVerificationCode()
 
         emailService.sendVerificationEmail(account.email, code)
 
-        return repository.save(account.copy(code = code)).awaitSingle()
+        return repository.save(account.copy(code = code))
     }
 
     private fun generateVerificationCode(): String {
@@ -42,13 +42,13 @@ class AccountService(
     }
 
     suspend fun verifyAccount(username: String, code: String): Validated<AccountVerificationError, String> {
-        val account = repository.findAccountByUsername(username).awaitSingleOrNull() ?: return AccountNotFoundError.invalid()
+        val account = repository.findAccountByUsername(username) ?: return AccountNotFoundError.invalid()
 
         if (account.code != code) {
             return InvalidVerificationCodeError.invalid()
         }
 
-        val updated = repository.save(account.copy(code = null)).awaitSingle()
+        val updated = repository.save(account.copy(code = null))
         val token = authenticationService.createJwtToken(updated)
 
         return token.credentials.valid()

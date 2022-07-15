@@ -27,7 +27,7 @@ class JwtAuthenticationManager(
 
     private suspend fun validate(token: JwtAuthenticationToken): Authentication {
         val username = jwt.getUsernameFromToken(token) ?: throw InvalidJwtTokenException("The provided JWT token is not valid")
-        val account = repository.findAccountByUsername(username).awaitSingleOrNull() ?: throw InvalidJwtTokenException("No matching account found")
+        val account = repository.findAccountByUsername(username) ?: throw InvalidJwtTokenException("No matching account found")
         val authorities = listOf(SimpleGrantedAuthority("ROLE_USER"))
 
         return UsernamePasswordAuthenticationToken(account, token.credentials, authorities)

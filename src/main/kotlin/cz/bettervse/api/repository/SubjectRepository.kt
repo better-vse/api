@@ -1,15 +1,14 @@
 package cz.bettervse.api.repository
 
 import cz.bettervse.api.domain.Subject
-import org.springframework.data.repository.reactive.ReactiveCrudRepository
+import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import org.springframework.stereotype.Repository
-import reactor.core.publisher.Mono
 
 @Repository
-interface SubjectRepository : ReactiveCrudRepository<Subject, Int> {
+interface SubjectRepository : CoroutineCrudRepository<Subject, Int> {
 
-    fun findSubjectByCode(code: String): Mono<Subject>
+    suspend fun findSubjectByCode(code: String): Subject?
 
-    fun findSubjectByInsis(insis: Int): Mono<Subject>
+    suspend fun findSubjectByInsis(insis: Int): Subject?
 
 }
